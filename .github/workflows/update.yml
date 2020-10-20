@@ -1,0 +1,65 @@
+name: Update CI
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '1 0 * * *'
+env:
+  TOP_GHREPOS_VERSION: v0.1.3
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Init - Vars
+      id: initvars
+      run: |
+       echo "::set-output name=current_date::$(date -u +%Y-%m-%d)"
+       
+    - name: Init - Configure Git
+      run: |
+        git config --global user.email "update.bot@nosuchmail.nonexistantaddress"
+        git config --global user.name "Update Bot"
+       
+    - name: Setup Scanner 
+      run: |
+        mkdir build
+        cd build
+        curl -L https://github.com/litetex/TopGHRepos/releases/download/$TOP_GHREPOS_VERSION/TopGHRepos.CMD-linux-x64.zip -o temp.zip
+        unzip temp.zip
+        rm temp.zip
+        chmod +x TopGHRepos.CMD
+        
+    - name: Run Scanner
+      run: ./TopGHRepos.CMD
+      working-directory: build
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      timeout-minutes: 20
+      
+    - name: Transfer data into git repo
+      run: |
+        mkdir -p data
+        mv build/database.sqlite data/${{ steps.initvars.outputs.current_date }}.sqlite
+      
+    - name: Clean
+      run: rm -r build
+      
+#    - name: Delete old files
+#      run: |
+#        maxdate=$(date -d "30 days ago" "+%Y-%m-%d");
+#        for fn in *.sqlite; do
+#          [ "$fn" ">" "${maxdate}.sqlite" ] || rm $fn
+#        done
+#      working-directory: data
+      
+    - name: Commit and Push
+      run: |
+        cd $GITHUB_WORKSPACE
+        git add -A
+        git commit -m "Update ${{ steps.initvars.outputs.current_date }}"
+        git push origin
