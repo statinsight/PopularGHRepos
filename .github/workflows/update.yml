@@ -40,6 +40,12 @@ jobs:
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
       timeout-minutes: 20
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: data
+        path: build/database.sqlite
       
     - name: Transfer data into git repo
       run: |
