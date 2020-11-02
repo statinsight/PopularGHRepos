@@ -55,13 +55,13 @@ jobs:
     - name: Clean
       run: rm -r build
       
-#    - name: Delete old files
-#      run: |
-#        maxdate=$(date -d "30 days ago" "+%Y-%m-%d");
-#        for fn in *.sqlite; do
-#          [ "$fn" ">" "${maxdate}.sqlite" ] || rm $fn
-#        done
-#      working-directory: data
+    - name: Delete old files
+      run: |
+        maxdate=$(date -d "30 days ago" "+%Y-%m-%d");
+        for fn in *.sqlite; do
+          [ "$fn" ">" "${maxdate}.sqlite" ] || rm $fn
+        done
+      working-directory: data
       
     - name: Commit and Push
       run: |
