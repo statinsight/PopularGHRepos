@@ -1,4 +1,4 @@
-# PopularGHRepos [![Build](https://img.shields.io/github/workflow/status/statinsight/PopularGHRepos/Update%20CI)](https://github.com/statinsight/PopularGHRepos/actions?query=workflow%3A%22Update+CI%22)
+# PopularGHRepos [![Update](https://github.com/statinsight/PopularGHRepos/actions/workflows/update.yml/badge.svg)](https://github.com/statinsight/PopularGHRepos/actions/workflows/update.yml)
 
 * Lists every repo with ``>=`` 1000 ⭐
 * Automatically updated every day

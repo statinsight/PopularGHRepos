@@ -1,4 +1,4 @@
-name: Update CI
+name: Update
 
 on:
   workflow_dispatch:
