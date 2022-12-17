@@ -18,7 +18,7 @@ jobs:
     - name: Init - Vars
       id: initvars
       run: |
-       echo "::set-output name=current_date::$(date -u +%Y-%m-%d)"
+       echo "current_date=$(date -u +%Y-%m-%d)" >> $GITHUB_OUTPUT
        
     - name: Init - Configure Git
       run: |
