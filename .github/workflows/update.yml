@@ -39,10 +39,10 @@ jobs:
       working-directory: build
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
-      timeout-minutes: 20
+      timeout-minutes: 30
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: data
         path: build/database.sqlite
