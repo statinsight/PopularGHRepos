@@ -39,7 +39,7 @@ jobs:
       working-directory: build
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
-      timeout-minutes: 30
+      timeout-minutes: 40
     
     - name: Upload artifact
       uses: actions/upload-artifact@v7
